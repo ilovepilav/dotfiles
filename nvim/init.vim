@@ -24,7 +24,8 @@ set laststatus=2
 set scrolloff=10
 set expandtab
 "let loaded_matchparen = 1
-set shell=/bin/zsh
+" set shell=/bin/zsh
+set shell=/usr/local/bin/fish
 set backupskip=/tmp/*,/private/tmp/*
 
 " incremental substitution (neovim)
@@ -113,19 +114,7 @@ autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 " Imports "{{{
 " ---------------------------------------------------------------------
 runtime ./plug.vim
-if has("unix")
-  let s:uname = system("uname -s")
-  " Do Mac stuff
-  if s:uname == "Darwin\n"
-    runtime ./macos.vim
-  endif
-endif
-if has('win32')
-  runtime ./windows.vim
-endif
-
 runtime ./maps.vim
-"}}}
 
 " Syntax theme "{{{
 " ---------------------------------------------------------------------
@@ -155,15 +144,17 @@ set exrc
 "}}}
 
 " vim: set foldmethod=marker foldlevel=0:
-nnoremap . <NOP> 
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <silent> , <Cmd>BufferPrevious<CR>
-nnoremap <silent> . <Cmd>BufferNext<CR>
+"nnoremap . <NOP> 
+nnoremap <silent> <C-t> :NERDTreeToggle<CR>
+nnoremap <silent> < <Cmd>BufferPrevious<CR>
+nnoremap <silent> > <Cmd>BufferNext<CR>
 nnoremap <C-x> <Cmd>BufferClose<CR>
 colorscheme vscode
 hi Normal guibg=NONE ctermbg=NONE
 
-" let b:ale_fixers = ['prettier', 'eslint']
-" let g:ale_fix_on_save = 1
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
+imap <C-c> <Esc>
+nnoremap <silent> td <Cmd>:lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> tD <Cmd>:lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> ti <Cmd>:lua vim.lsp.buf.implementation()<CR>

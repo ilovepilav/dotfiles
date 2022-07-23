@@ -11,7 +11,7 @@ if has("nvim")
   Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'romgrk/barbar.nvim'
   Plug 'preservim/nerdtree'

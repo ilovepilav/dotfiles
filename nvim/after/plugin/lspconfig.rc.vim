@@ -3,7 +3,7 @@ if !exists('g:lspconfig')
 endif
 
 lua << EOF
---vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 EOF
 
 lua << EOF
@@ -13,21 +13,23 @@ local protocol = require'vim.lsp.protocol'
 -- Use an on_attach function to only map the following keys 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  --local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  --local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   --Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
-
+  local opts = { noremap=true, silent=true, buffer=bufnr }
+  --vim.keymap.set('n', 'tD', vim.lsp.buf.declaration, bufopts)
+  --vim.keymap.set('n', 'td', vim.lsp.buf.definition, bufopts)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  --buf_set_keymap('n', 'td', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
+ 	--map('n','tD','<cmd>lua vim.lsp.buf.declaration()<CR>')
+	map('n','td','<cmd>lua vim.lsp.buf.definition()<CR>')
   -- formatting
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_command [[augroup Format]]
@@ -68,24 +70,19 @@ end
 
 
 -- Set up completion using nvim_cmp with LSP source
-local capabilities = require('cmp_nvim_lsp').update_capabilities(
-  vim.lsp.protocol.make_client_capabilities()
-)
-
-nvim_lsp.flow.setup {
-  on_attach = on_attach,
-  capabilities = capabilities
-}
+--local capabilities = require('cmp_nvim_lsp').update_capabilities(
+--  vim.lsp.protocol.make_client_capabilities()
+--)
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
-  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "typescript.tsx" },
   capabilities = capabilities
 }
 
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'pandoc' },
+  filetypes = { 'json','css', 'less', 'scss'},
   init_options = {
     linters = {
       eslint = {
@@ -154,5 +151,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
   }
 )
-
 EOF
