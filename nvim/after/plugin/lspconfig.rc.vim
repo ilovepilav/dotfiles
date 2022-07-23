@@ -76,13 +76,13 @@ end
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "typescript.tsx" },
+  filetypes = {  "typescript", "typescriptreact", "typescript.tsx" },
   capabilities = capabilities
 }
 
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,
-  filetypes = { 'json','css', 'less', 'scss'},
+  filetypes = { "javascript", "javascriptreact", "json","css", "less", "scss"},
   init_options = {
     linters = {
       eslint = {
@@ -147,7 +147,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     -- This sets the spacing and the prefix, obviously.
     virtual_text = {
       spacing = 4,
-      prefix = ''
+      prefix = '',
+      severity_limit = 'Warning'
     }
   }
 )
