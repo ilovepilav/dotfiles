@@ -1,8 +1,8 @@
 # ignore specific
 *
 /*
-!/fish
-!/nvim
-!/omf
-!/kitty
+!/fish**
+!/nvim**
+!/omf**
+!/kitty**
 !.gitignore
