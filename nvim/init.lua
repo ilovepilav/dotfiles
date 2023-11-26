@@ -141,6 +141,29 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'onedark'
   --   end,
   -- },
+  -- lazy.nvim
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  },
+  -- nvim-notify plugin
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   opts = {
+  --     timeout = 2500,
+  --   },
+  -- },
 
   {
     -- Theme inspired by VSCode
@@ -559,7 +582,7 @@ toggleterm.setup {
   -- Add your configuration options here
   start_in_insert = true, -- Open terminal in insert mode
   float_opts = {
-    border = 'single',
+    border = 'curved',
     width = 70,
     height = 20,
     winblend = 3,
@@ -630,3 +653,29 @@ require("transparent").setup({ -- Optional, you don't have to run setup.
 
 --Transparency toggle
 vim.api.nvim_set_keymap('n', '<Leader>vv', ':TransparentToggle<CR>', { noremap = true, silent = true })
+
+-- New tab
+local keymap = vim.keymap
+local opts = { noremap = true, silent = true }
+keymap.set("n", "te", ":tabedit<CR>")
+keymap.set("n", "<tab>", ":tabnext<Return>", opts)
+keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+--
+-- Relative line numbers
+vim.wo.relativenumber = true
+
+local discipline = require("discipline")
+
+-- vim.notify = require("notify")
+discipline.cowboy()
+
+require("notify").setup({
+  background_colour = "#000000",
+  minimum_width = 20,
+  max_width = 40,
+  timeout = 2000,
+  level = 1,
+  max_height = 10,
+  render = 'compact',
+  fps = 1,
+})
